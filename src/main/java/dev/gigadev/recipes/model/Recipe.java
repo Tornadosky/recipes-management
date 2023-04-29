@@ -1,5 +1,6 @@
-package dev.gigadev.recipes;
+package dev.gigadev.recipes.model;
 
+import dev.gigadev.recipes.Ingredient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,8 @@ public class Recipe {
     private String name;
     private String imageURL;
     private List<Ingredient> ingredients;
-    private List<String> steps;
-    private List<Integer> timers;
+    private List<String> categories;
+    private List<String> types;
+    private Integer preparationTime;
 
 }

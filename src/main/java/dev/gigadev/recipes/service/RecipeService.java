@@ -1,5 +1,7 @@
-package dev.gigadev.recipes;
+package dev.gigadev.recipes.service;
 
+import dev.gigadev.recipes.RecipeRepository;
+import dev.gigadev.recipes.model.Recipe;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

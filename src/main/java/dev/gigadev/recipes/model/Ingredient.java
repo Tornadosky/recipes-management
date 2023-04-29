@@ -1,4 +1,4 @@
-package dev.gigadev.recipes;
+package dev.gigadev.recipes.model;
 
 public record Ingredient(
         String name,
