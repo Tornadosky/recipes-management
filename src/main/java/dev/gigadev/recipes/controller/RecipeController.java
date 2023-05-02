@@ -18,16 +18,21 @@ public class RecipeController {
     @Autowired
     private RecipeService recipeService;
 
-//    @GetMapping
-//    public ResponseEntity<List<Recipe>> getAllRecipes() {
-//        return new ResponseEntity<List<Recipe>>(recipeService.allRecipes(), HttpStatus.OK);
-//    }
+    //    @GetMapping
+    //    public ResponseEntity<List<Recipe>> getAllRecipes() {
+    //        return new ResponseEntity<List<Recipe>>(recipeService.allRecipes(), HttpStatus.OK);
+    //    }
 
     @GetMapping
     public ResponseEntity<?> getRecipesByProperties(@RequestParam(required = false) List<String> types,
                                                     @RequestParam(required = false) List<String> categories,
                                                     @RequestParam(required = false) Integer preparationTime) {
         return ResponseEntity.ok().body(recipeService.fetchRecipesByProperties(types, categories, preparationTime));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> getRecipesByText(@RequestParam String searchPhrase) {
+        return ResponseEntity.ok().body(recipeService.findRecipesByText(searchPhrase));
     }
 
     @GetMapping("/{id}")

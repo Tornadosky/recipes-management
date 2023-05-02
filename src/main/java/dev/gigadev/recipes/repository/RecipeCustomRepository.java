@@ -7,5 +7,5 @@ import java.util.List;
 public interface RecipeCustomRepository {
     public List<Recipe> findRecipesByProperties(List<String> types, List<String> categories,
                                                 Integer preparationTime);
+    public List<Recipe> findRecipesByText(String searchPhrase);
 }
-

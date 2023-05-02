@@ -24,13 +24,17 @@ public class RecipeService {
     private RecipeRepository recipeRepository;
 
     // api/v1/recipes return all recipes
-//    public List<Recipe> allRecipes() {
-//        return recipeRepository.findAll();
-//    }
+    //    public List<Recipe> allRecipes() {
+    //        return recipeRepository.findAll();
+    //    }
 
     public List<Recipe> fetchRecipesByProperties(List<String> types, List<String> categories,
                                                  Integer preparationTime) {
         return recipeRepository.findRecipesByProperties(types, categories, preparationTime);
+    }
+
+    public List<Recipe> findRecipesByText(String searchPhrase) {
+        return recipeRepository.findRecipesByText(searchPhrase);
     }
 
     // api/v1/recipes/{id} return json recipe with {id}

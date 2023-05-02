@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextCriteria;
+import org.springframework.data.mongodb.core.query.TextQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,5 +31,17 @@ public class RecipeCustomRepositoryImpl implements RecipeCustomRepository{
         if (!criteria.isEmpty())
             query.addCriteria(new Criteria().andOperator(criteria.toArray(new Criteria[criteria.size()])));
         return mongoTemplate.find(query, Recipe.class);
+    }
+
+    public List<Recipe> findRecipesByText(String searchPhrase) {
+        TextCriteria criteria = TextCriteria
+                .forDefaultLanguage()
+                .matchingPhrase(searchPhrase);
+
+        Query query = TextQuery.queryText(criteria).sortByScore();
+
+        List<Recipe> recipes = mongoTemplate.find(query, Recipe.class);
+
+        return recipes;
     }
 }
