@@ -1,0 +1,47 @@
+### Get all Recipes
+GET http://localhost:8080/api/recipes
+
+### Get Recipes by Filter parameters
+GET http://localhost:8080/api/recipes?categories=vegan&preparationTime=16
+
+### Get single Recipe by ID
+GET http://localhost:8080/api/recipes/643185e3187bd08e12d63760
+
+### Get single non-existent Recipe
+GET http://localhost:8080/api/recipes/643185e3187bd08e12d12345
+
+### Get Recipes by Search parameter
+GET http://localhost:8080/api/recipes/search?searchPhrase=roast
+
+### Create new Recipe
+POST http://localhost:8080/api/recipes
+Content-Type: application/json
+
+{
+  "id": {
+    "timestamp": 1680967299,
+    "date": "2023-04-25T15:18:59.000+00:00"
+  },
+  "name": "My new Recipe",
+  "imageURL": "Some image URL",
+  "ingredients": [
+    {
+      "name": "egg",
+      "quantity": "1"
+    },
+    {
+      "name": "bread",
+      "quantity": "2"
+    }
+  ],
+  "categories": [
+    "meat",
+    "rice"
+  ],
+  "types": [
+    "Breakfast",
+    "Snack"
+  ],
+  "preparationTime": 20
+}
+
