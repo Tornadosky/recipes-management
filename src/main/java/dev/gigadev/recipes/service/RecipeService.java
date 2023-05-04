@@ -23,10 +23,9 @@ public class RecipeService {
     @Autowired
     private RecipeRepository recipeRepository;
 
-    // api/v1/recipes return all recipes
-    //    public List<Recipe> allRecipes() {
-    //        return recipeRepository.findAll();
-    //    }
+    public List<Recipe> allRecipes() {
+        return recipeRepository.findAll();
+    }
 
     public List<Recipe> fetchRecipesByProperties(List<String> types, List<String> categories,
                                                  Integer preparationTime) {
@@ -37,9 +36,11 @@ public class RecipeService {
         return recipeRepository.findRecipesByText(searchPhrase);
     }
 
-    // api/v1/recipes/{id} return json recipe with {id}
-    // if no {id} exists in db return null
     public Optional<Recipe> singleRecipe(ObjectId id) {
         return recipeRepository.findById(id);
+    }
+
+    public void saveRecipe(Recipe recipe) {
+        recipeRepository.save(recipe);
     }
 }

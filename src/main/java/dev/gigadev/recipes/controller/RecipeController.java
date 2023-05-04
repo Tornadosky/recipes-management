@@ -7,12 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/v1/recipes")
+@RequestMapping("api/recipes")
 public class RecipeController {
 
     @Autowired
@@ -23,20 +24,29 @@ public class RecipeController {
     //        return new ResponseEntity<List<Recipe>>(recipeService.allRecipes(), HttpStatus.OK);
     //    }
 
-    @GetMapping
-    public ResponseEntity<?> getRecipesByProperties(@RequestParam(required = false) List<String> types,
-                                                    @RequestParam(required = false) List<String> categories,
-                                                    @RequestParam(required = false) Integer preparationTime) {
-        return ResponseEntity.ok().body(recipeService.fetchRecipesByProperties(types, categories, preparationTime));
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("")
+    public List<Recipe> getRecipesByProperties(@RequestParam(required = false) List<String> types,
+                                               @RequestParam(required = false) List<String> categories,
+                                               @RequestParam(required = false) Integer preparationTime) {
+        return recipeService.fetchRecipesByProperties(types, categories, preparationTime);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/search")
-    public ResponseEntity<?> getRecipesByText(@RequestParam String searchPhrase) {
-        return ResponseEntity.ok().body(recipeService.findRecipesByText(searchPhrase));
+    public List<Recipe> getRecipesByText(@RequestParam String searchPhrase) {
+        return recipeService.findRecipesByText(searchPhrase);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Recipe>> getSingleRecipe(@PathVariable ObjectId id) {
-        return new ResponseEntity<Optional<Recipe>>(recipeService.singleRecipe(id), HttpStatus.OK);
+    public Recipe getSingleRecipe(@PathVariable ObjectId id) {
+        return recipeService.singleRecipe(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found!"));
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("")
+    public void createRecipe(@RequestBody Recipe recipe) {
+        recipeService.saveRecipe(recipe);
     }
 }
