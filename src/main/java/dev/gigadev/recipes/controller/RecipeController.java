@@ -49,4 +49,20 @@ public class RecipeController {
     public void createRecipe(@RequestBody Recipe recipe) {
         recipeService.saveRecipe(recipe);
     }
+
+    //    @ResponseStatus(HttpStatus.NO_CONTENT)
+    //    @PutMapping("/{id}")
+    //    public void updateRecipe(@RequestBody Recipe recipe, @PathVariable ObjectId id) {
+    //        Optional<Recipe> foundRecipe = recipeService.singleRecipe(id);
+    //        if(foundRecipe.isEmpty()) {
+    //            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found.");
+    //        }
+    //        recipeService.saveRecipe(recipe);
+    //    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void deleteRecipe(@PathVariable ObjectId id) {
+        recipeService.deleteById(id);
+    }
 }

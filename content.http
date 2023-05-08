@@ -45,3 +45,19 @@ Content-Type: application/json
   "preparationTime": 20
 }
 
+### Update existing Recipe
+#PUT http://localhost:8080/api/recipes/64318683b17c7972c6df61a5
+#Content-Type: application/json
+#
+#{
+#  "title": "MY FIRST POST!!!",
+#  "desc": "MY FIRST POST!!!",
+#  "status": "IDEA",
+#  "contentType": "ARTICLE",
+#  "dateCreated": "2023-02-13T10:25:02.838496",
+#  "dateUpdated": "2023-02-13T10:25:02.838496",
+#  "url": "http://localhost:8080/my-first-blog-post"
+#}
+
+### Delete by ID
+DELETE http://localhost:8080/api/recipes/643186836433623fb1c064b2

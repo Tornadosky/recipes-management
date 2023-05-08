@@ -40,6 +40,10 @@ public class RecipeService {
         return recipeRepository.findById(id);
     }
 
+    public void deleteById(ObjectId id) {
+        recipeRepository.deleteById(id);
+    }
+
     public void saveRecipe(Recipe recipe) {
         recipeRepository.save(recipe);
     }
