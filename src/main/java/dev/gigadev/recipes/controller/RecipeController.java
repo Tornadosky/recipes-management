@@ -50,15 +50,21 @@ public class RecipeController {
         recipeService.saveRecipe(recipe);
     }
 
-    //    @ResponseStatus(HttpStatus.NO_CONTENT)
-    //    @PutMapping("/{id}")
-    //    public void updateRecipe(@RequestBody Recipe recipe, @PathVariable ObjectId id) {
-    //        Optional<Recipe> foundRecipe = recipeService.singleRecipe(id);
-    //        if(foundRecipe.isEmpty()) {
-    //            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Content not found.");
-    //        }
-    //        recipeService.saveRecipe(recipe);
-    //    }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{id}")
+    public void updateRecipe(@RequestBody Recipe newRecipe, @PathVariable ObjectId id) {
+        recipeService.singleRecipe(id)
+                .map(recipe -> {
+                    recipe.setName(newRecipe.getName());
+                    recipe.setImageURL(newRecipe.getImageURL());
+                    recipe.setIngredients(newRecipe.getIngredients());
+                    recipe.setCategories(newRecipe.getCategories());
+                    recipe.setTypes(newRecipe.getTypes());
+                    recipe.setPreparationTime(newRecipe.getPreparationTime());
+                    return recipeService.saveRecipe(recipe);
+                })
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found!"));
+    }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")

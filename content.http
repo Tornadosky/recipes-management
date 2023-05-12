@@ -18,10 +18,6 @@ POST http://localhost:8080/api/recipes
 Content-Type: application/json
 
 {
-  "id": {
-    "timestamp": 1680967299,
-    "date": "2023-04-25T15:18:59.000+00:00"
-  },
   "name": "My new Recipe",
   "imageURL": "Some image URL",
   "ingredients": [
@@ -46,18 +42,28 @@ Content-Type: application/json
 }
 
 ### Update existing Recipe
-#PUT http://localhost:8080/api/recipes/64318683b17c7972c6df61a5
-#Content-Type: application/json
-#
-#{
-#  "title": "MY FIRST POST!!!",
-#  "desc": "MY FIRST POST!!!",
-#  "status": "IDEA",
-#  "contentType": "ARTICLE",
-#  "dateCreated": "2023-02-13T10:25:02.838496",
-#  "dateUpdated": "2023-02-13T10:25:02.838496",
-#  "url": "http://localhost:8080/my-first-blog-post"
-#}
+PUT http://localhost:8080/api/recipes/644806cf1af8e6781cd12345
+Content-Type: application/json
+
+{
+  "name": "HEHEHEHE",
+  "imageURL": "Some image URL",
+  "ingredients": [
+    {
+      "name": "egg",
+      "quantity": "1"
+    }
+  ],
+  "categories": [
+    "meat",
+    "rice"
+  ],
+  "types": [
+    "Breakfast",
+    "Snack"
+  ],
+  "preparationTime": 20
+}
 
 ### Delete by ID
-DELETE http://localhost:8080/api/recipes/643186836433623fb1c064b2
+DELETE http://localhost:8080/api/recipes/644806cf1af8e6781cd05025

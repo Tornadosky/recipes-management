@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RecipeService {
@@ -44,7 +41,7 @@ public class RecipeService {
         recipeRepository.deleteById(id);
     }
 
-    public void saveRecipe(Recipe recipe) {
-        recipeRepository.save(recipe);
+    public Recipe saveRecipe(Recipe recipe) {
+        return recipeRepository.save(recipe);
     }
 }
