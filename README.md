@@ -14,4 +14,3 @@ Every time you want to add something new or fix and issue, make sure you follow 
 NOTE: Also, you may want to update your local(issue) branch from main, to achieve that you need to switch back to the main branch by running `git checkout main`, then you need to pull all the new changes from remote by running `git pull origin main` on your terminal. The next step is to switch back to your issue branch and running `git merge master`. This will update your your issue branch.
 
 
-

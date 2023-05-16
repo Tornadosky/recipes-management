@@ -2,6 +2,7 @@ package dev.gigadev.recipes.service;
 
 import dev.gigadev.recipes.model.Recipe;
 import dev.gigadev.recipes.repository.RecipeRepository;
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -15,10 +16,10 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class RecipeService {
 
-    @Autowired
-    private RecipeRepository recipeRepository;
+    private final RecipeRepository recipeRepository;
 
     public List<Recipe> allRecipes() {
         return recipeRepository.findAll();

@@ -1,6 +1,7 @@
 package dev.gigadev.recipes.repository;
 
 import dev.gigadev.recipes.model.Recipe;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

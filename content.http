@@ -18,7 +18,7 @@ POST http://localhost:8080/api/recipes
 Content-Type: application/json
 
 {
-  "name": "My new Recipe",
+  "name": "Some name here",
   "imageURL": "Some image URL",
   "ingredients": [
     {

@@ -2,6 +2,8 @@ package dev.gigadev.recipes.controller;
 
 import dev.gigadev.recipes.service.RecipeService;
 import dev.gigadev.recipes.model.Recipe;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +16,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/recipes")
+@RequiredArgsConstructor
 public class RecipeController {
 
-    @Autowired
-    private RecipeService recipeService;
+    private final RecipeService recipeService;
 
     //    @GetMapping
     //    public ResponseEntity<List<Recipe>> getAllRecipes() {
@@ -41,18 +43,19 @@ public class RecipeController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public Recipe getSingleRecipe(@PathVariable ObjectId id) {
-        return recipeService.singleRecipe(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found!"));
+        return recipeService.singleRecipe(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found!"));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public void createRecipe(@RequestBody Recipe recipe) {
+    public void createRecipe(@Valid @RequestBody Recipe recipe) {
         recipeService.saveRecipe(recipe);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    public void updateRecipe(@RequestBody Recipe newRecipe, @PathVariable ObjectId id) {
+    public void updateRecipe(@Valid @RequestBody Recipe newRecipe, @PathVariable ObjectId id) {
         recipeService.singleRecipe(id)
                 .map(recipe -> {
                     recipe.setName(newRecipe.getName());

@@ -1,5 +1,7 @@
 package dev.gigadev.recipes.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,11 +20,14 @@ public class Recipe {
     @Id
     private ObjectId id;
     @TextIndexed
+    @NotBlank(message = "Name is mandatory")
     private String name;
     private String imageURL;
+    @NotEmpty(message = "Ingredients can't be empty")
     private List<Ingredient> ingredients;
     private List<String> categories;
     private List<String> types;
     private Integer preparationTime;
 
 }
+
