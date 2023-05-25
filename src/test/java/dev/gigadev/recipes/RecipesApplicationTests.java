@@ -1,8 +1,6 @@
 package dev.gigadev.recipes;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import dev.gigadev.recipes.controller.RecipeController;
 import dev.gigadev.recipes.model.Ingredient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,20 +8,15 @@ import dev.gigadev.recipes.model.Recipe;
 import dev.gigadev.recipes.repository.RecipeRepository;
 import dev.gigadev.recipes.service.RecipeService;
 import org.bson.types.ObjectId;
-import org.junit.Before;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import java.io.Console;
 import java.util.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class RecipesApplicationTests {
@@ -101,7 +94,6 @@ class RecipesApplicationTests {
 	@Test
 	public void testFetchRecipesByProperties() {
 
-		List<Recipe> recipes = Arrays.asList(recipe1, recipe2);
 		List<Recipe> expectedResult = Collections.singletonList(recipe1);
 
 		when(recipeRepository.findRecipesByProperties(recipe1.getTypes(), recipe1.getCategories(), recipe1.getPreparationTime())).thenReturn(expectedResult);
@@ -137,10 +129,6 @@ class RecipesApplicationTests {
 	public void testDeleteById() {
 		// Set up the mock repository to return the mock Recipe object when findById() is called with the mock ObjectId
 		when(recipeRepository.findAll()).thenReturn(Arrays.asList(recipe1, recipe2));
-
-		// Call the service method with the mock ObjectId
-		List<Recipe> resultBeforeDelete = recipeService.allRecipes();
-
 		// Assert that the recipe exists before deletion
 //        assertEquals(Arrays.asList(recipe1, recipe2), resultBeforeDelete);
 		// Delete the recipe by ID
