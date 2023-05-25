@@ -1,5 +1,7 @@
 package dev.gigadev.recipes.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Recipe {
     @Id
+    @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
     @TextIndexed
     @NotBlank(message = "Name is mandatory")
