@@ -1,5 +1,4 @@
 package dev.gigadev.recipes.service;
-
 import dev.gigadev.recipes.model.Recipe;
 import dev.gigadev.recipes.repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +39,7 @@ public class RecipeService {
 
     public void deleteById(ObjectId id) {
         recipeRepository.deleteById(id);
+
     }
 
     public Recipe saveRecipe(Recipe recipe) {
