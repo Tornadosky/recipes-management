@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Document(collection = "recipes")
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Recipe {
