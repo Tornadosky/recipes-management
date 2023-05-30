@@ -2,8 +2,10 @@ package dev.gigadev.recipes.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +34,8 @@ public class Recipe {
     private List<Ingredient> ingredients;
     private List<String> categories;
     private List<String> types;
+    @DecimalMax("600")
+    @Positive
     private Integer preparationTime;
 
 }

@@ -5,14 +5,13 @@ import dev.gigadev.recipes.model.Recipe;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/recipes")
@@ -45,6 +44,12 @@ public class RecipeController {
     public Recipe getSingleRecipe(@PathVariable ObjectId id) {
         return recipeService.singleRecipe(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found!"));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{id}/pdf")
+    public ResponseEntity<Resource> getPdfFromRecipe(@PathVariable ObjectId id) throws Exception {
+        return recipeService.exportRecipeToPdf(id);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

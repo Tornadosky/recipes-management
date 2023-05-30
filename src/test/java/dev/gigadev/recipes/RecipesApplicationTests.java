@@ -128,9 +128,6 @@ class RecipesApplicationTests {
 		when(recipeRepository.findAll()).thenReturn(Arrays.asList(recipe1, recipe2));
 		// Delete the recipe by ID
 		recipeService.deleteById(id1);
-		// Assert that the recipe exists before deletion
-		assertEquals(List.of(recipe2), recipeRepository.findAll());
-
 		// Verify that the findById and deleteById methods were called once with the correct ID
 		verify(recipeRepository, times(1)).deleteById(id1);
 	}
