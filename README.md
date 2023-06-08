@@ -1,6 +1,11 @@
 # Cooking-recipes
+
+## API Documentation
+API docs can be found in the projects [Wiki](https://mygit.th-deg.de/agile-avengers/cooking-recipes/-/wikis/API-Documentation).
+
 ## Getting Started with the development
 
+You should have Java version >= 17.
 First you need to clone the repository. Then add _.env_ file to _resources_ with db credentials.
 
 ## Contributing to the repo
