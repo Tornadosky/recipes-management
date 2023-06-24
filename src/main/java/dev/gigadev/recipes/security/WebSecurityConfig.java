@@ -1,6 +1,5 @@
 package dev.gigadev.recipes.security;
 
-
 import dev.gigadev.recipes.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -55,15 +54,19 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
+                // make sure we use stateless session; session won't be used to
+                // store user's state.
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests(authorize -> authorize
+                        // don't authenticate this particular requests
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/test/**").permitAll()
+                        // all other requests need to be authenticated
                         .anyRequest().authenticated());
 
         http.authenticationProvider(authenticationProvider());
 
+        // Add a filter to validate the tokens with every request
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
