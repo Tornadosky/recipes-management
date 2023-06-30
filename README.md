@@ -1,7 +1,7 @@
 # Cooking-recipes
 
 ## API Documentation
-API docs can be found in the projects [Wiki](https://mygit.th-deg.de/agile-avengers/cooking-recipes/-/wikis/API-Documentation).
+API docs can be found in the projects [Wiki](https://github.com/Tornadosky/recipes-management/wiki/API-documentation).
 
 ## Getting Started with the development
 
