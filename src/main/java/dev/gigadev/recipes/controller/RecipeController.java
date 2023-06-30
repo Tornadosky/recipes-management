@@ -67,6 +67,7 @@ public class RecipeController {
                     recipe.setImageURL(newRecipe.getImageURL());
                     recipe.setIngredients(newRecipe.getIngredients());
                     recipe.setCategories(newRecipe.getCategories());
+                    recipe.setSteps(newRecipe.getSteps());
                     recipe.setTypes(newRecipe.getTypes());
                     recipe.setPreparationTime(newRecipe.getPreparationTime());
                     return recipeService.saveRecipe(recipe);

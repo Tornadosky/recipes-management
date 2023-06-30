@@ -41,8 +41,6 @@ public class RecipeCustomRepositoryImpl implements RecipeCustomRepository{
 
         Query query = TextQuery.queryText(criteria).sortByScore();
 
-        List<Recipe> recipes = mongoTemplate.find(query, Recipe.class);
-
-        return recipes;
+        return mongoTemplate.find(query, Recipe.class);
     }
 }

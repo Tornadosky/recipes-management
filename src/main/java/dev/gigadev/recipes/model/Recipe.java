@@ -32,11 +32,12 @@ public class Recipe {
     private String imageURL;
     @NotEmpty(message = "Ingredients can't be empty")
     private List<Ingredient> ingredients;
+    @NotEmpty(message = "Steps can't be empty")
+    private List<String> steps;
     private List<String> categories;
     private List<String> types;
     @DecimalMax("600")
     @Positive
     private Integer preparationTime;
-
 }
 

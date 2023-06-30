@@ -37,15 +37,15 @@ class RecipesApplicationTests {
 		id2 = new ObjectId("6177ec310bceee97a38a13e1");
 
 		List<Ingredient> ingredients1 = new ArrayList<>();
-		ingredients1.add(new Ingredient("Spaghetti", "1 lb"));
-		ingredients1.add(new Ingredient("Tomato Sauce", "24 oz"));
-		ingredients1.add(new Ingredient("Garlic", "3 cloves"));
-		ingredients1.add(new Ingredient("Olive Oil", "2 tbsp"));
+		ingredients1.add(new Ingredient("Spaghetti", "1", "lb"));
+		ingredients1.add(new Ingredient("Tomato Sauce", "24", "oz"));
+		ingredients1.add(new Ingredient("Garlic", "3", "cloves"));
+		ingredients1.add(new Ingredient("Olive Oil", "2", "tbsp"));
 
 		List<Ingredient> ingredients2 = new ArrayList<>();
-		ingredients2.add(new Ingredient("Pizza Dough", "200g"));
-		ingredients2.add(new Ingredient("Tomato Sauce", "100g"));
-		ingredients2.add(new Ingredient("Mozzarella Cheese", "100g"));
+		ingredients2.add(new Ingredient("Pizza Dough", "200", "grams"));
+		ingredients2.add(new Ingredient("Tomato Sauce", "100", "grams"));
+		ingredients2.add(new Ingredient("Mozzarella Cheese", "100", "grams"));
 
 		recipe1 = Recipe.builder()
 				.id(id1)
