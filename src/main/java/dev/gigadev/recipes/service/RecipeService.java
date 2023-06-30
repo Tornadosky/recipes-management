@@ -45,7 +45,7 @@ public class RecipeService {
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell);
 
-        cell = new PdfPCell(new Paragraph("Preparation Time"));
+        cell = new PdfPCell(new Paragraph(""));
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
         table.addCell(cell);
 
@@ -54,6 +54,9 @@ public class RecipeService {
             table.addCell(cell);
 
             cell = new PdfPCell(new Paragraph(ingredient.getQuantity()));
+            table.addCell(cell);
+
+            cell = new PdfPCell(new Paragraph(ingredient.getUnits()));
             table.addCell(cell);
         }
 
