@@ -1,7 +1,10 @@
 package dev.gigadev.recipes.payload;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class UserInfoResponse {
     private String id;
     private String username;
@@ -13,33 +16,5 @@ public class UserInfoResponse {
         this.username = username;
         this.email = email;
         this.roles = roles;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public List<String> getRoles() {
-        return roles;
     }
 }
