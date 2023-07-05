@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -39,5 +40,24 @@ public class Recipe {
     @DecimalMax("600")
     @Positive
     private Integer preparationTime;
+    @DBRef
+    private User createdBy;
+
+    public Recipe(String name,
+                  String imageURL,
+                  List<Ingredient> ingredients,
+                  List<String> steps,
+                  List<String> categories,
+                  List<String> types,
+                  Integer preparationTime)
+    {
+        this.name = name;
+        this.imageURL = imageURL;
+        this.ingredients = ingredients;
+        this.steps = steps;
+        this.categories = categories;
+        this.types = types;
+        this.preparationTime = preparationTime;
+    }
 }
 

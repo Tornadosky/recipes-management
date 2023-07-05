@@ -1,7 +1,9 @@
 package dev.gigadev.recipes.service;
 import dev.gigadev.recipes.model.Ingredient;
 import dev.gigadev.recipes.model.Recipe;
+import dev.gigadev.recipes.model.User;
 import dev.gigadev.recipes.repository.RecipeRepository;
+import dev.gigadev.recipes.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import com.itextpdf.text.Document;
@@ -13,9 +15,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.ByteArrayOutputStream;
 import java.util.*;
@@ -25,6 +31,27 @@ import java.util.*;
 public class RecipeService {
 
     private final RecipeRepository recipeRepository;
+    private final UserRepository userRepository;
+
+    public User getAuthenticatedUser() {
+        // Retrieve the currently authenticated user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        String currentUsername = userDetails.getUsername();
+
+        // Retrieve the User object for the currently authenticated user
+        return userRepository.findByUsername(currentUsername)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
+    }
+
+    public boolean isNotUserAdmin() {
+        // Retrieve the currently authenticated user
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        // Check if the current user is an admin
+        return !userDetails.isAdmin();
+    }
 
     public ResponseEntity<Resource> exportRecipeToPdf(ObjectId recipeId) throws Exception {
         Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(() -> new Exception("Recipe not found"));
@@ -53,10 +80,7 @@ public class RecipeService {
             cell = new PdfPCell(new Paragraph(ingredient.getName()));
             table.addCell(cell);
 
-            cell = new PdfPCell(new Paragraph(ingredient.getQuantity()));
-            table.addCell(cell);
-
-            cell = new PdfPCell(new Paragraph(ingredient.getUnits()));
+            cell = new PdfPCell(new Paragraph(ingredient.getQuantity() + " " + ingredient.getUnits()));
             table.addCell(cell);
         }
 

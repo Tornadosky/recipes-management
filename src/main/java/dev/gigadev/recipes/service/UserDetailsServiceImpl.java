@@ -1,26 +1,45 @@
-package dev.gigadev.recipes.service;
+package dev.gigadev.recipes.repository;
 
-import dev.gigadev.recipes.model.User;
-import dev.gigadev.recipes.repository.UserRepository;
+import dev.gigadev.recipes.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextCriteria;
+import org.springframework.data.mongodb.core.query.TextQuery;
 
-@Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+import java.util.ArrayList;
+import java.util.List;
+
+public class RecipeCustomRepositoryImpl implements RecipeCustomRepository{
+
     @Autowired
-    UserRepository userRepository;
+    MongoTemplate mongoTemplate;
 
-    @Override
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+    public List<Recipe> findRecipesByProperties(List<String> types, List<String> categories,
+                                                Integer preparationTime) {
+        final Query query = new Query();
+        // query.fields().include("id").include("name");
+        final List<Criteria> criteria = new ArrayList<>();
+        if (types != null && !types.isEmpty())
+            criteria.add(Criteria.where("types").in(types));
+        if (categories != null && !categories.isEmpty())
+            criteria.add(Criteria.where("categories").in(categories));
+        if (preparationTime != null)
+            criteria.add(Criteria.where("preparationTime").lte(preparationTime));
 
-        return UserDetailsImpl.build(user);
+        if (!criteria.isEmpty())
+            query.addCriteria(new Criteria().andOperator(criteria.toArray(new Criteria[0])));
+        return mongoTemplate.find(query, Recipe.class);
     }
 
+    public List<Recipe> findRecipesByText(String searchPhrase) {
+        TextCriteria criteria = TextCriteria
+                .forDefaultLanguage()
+                .matchingPhrase(searchPhrase);
+
+        Query query = TextQuery.queryText(criteria).sortByScore();
+
+        return mongoTemplate.find(query, Recipe.class);
+    }
 }
