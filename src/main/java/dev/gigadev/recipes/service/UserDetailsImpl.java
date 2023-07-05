@@ -49,6 +49,10 @@ public class UserDetailsImpl implements UserDetails {
                 authorities);
     }
 
+    public boolean isAdmin() {
+        return this.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
