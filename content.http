@@ -75,3 +75,22 @@ Content-Type: application/json
 
 ### Delete by ID
 DELETE http://localhost:8080/api/recipes/644806cf1af8e6781cd05025
+
+### Log in as user
+POST http://localhost:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "lavoRka",
+  "password": "123secretpassword"
+}
+
+### Register new user
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "testUser",
+  "email": "testUser@gmail.com",
+  "password": "testUser"
+}
