@@ -4,44 +4,42 @@ import dev.gigadev.recipes.controller.AuthController;
 import dev.gigadev.recipes.model.ERole;
 import dev.gigadev.recipes.model.Role;
 import dev.gigadev.recipes.model.User;
-import dev.gigadev.recipes.payload.LoginRequest;
 import dev.gigadev.recipes.payload.MessageResponse;
 import dev.gigadev.recipes.payload.SignupRequest;
 import dev.gigadev.recipes.repository.RoleRepository;
 import dev.gigadev.recipes.repository.UserRepository;
-import io.jsonwebtoken.lang.Assert;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import jakarta.validation.constraints.AssertFalse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.core.Authentication;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.web.ErrorResponse;
+import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-
+@SpringBootTest
+@AutoConfigureMockMvc
 class AuthControllerTest {
-
 
     @Mock
     private UserRepository userRepository;
@@ -114,11 +112,10 @@ class AuthControllerTest {
         request2.setPassword("");
         request2.setUsername("testuser");
         request2.setEmail("test@example.com");
-        //request2.setRoles(Collections.singleton("user"));
+
         // Validate the request object (password is not blank and has some length)
         Set<ConstraintViolation<SignupRequest>> violations = validator.validate(request2);
-        System.out.println(violations);
-        System.out.println(violations.isEmpty());
+
         assertFalse(violations.isEmpty());
     }
     @Test
