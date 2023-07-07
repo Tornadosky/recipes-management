@@ -30,8 +30,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.springframework.data.mongodb.core.aggregation.BooleanOperators.Or.or;
-
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
@@ -67,21 +65,13 @@ public class AuthController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        String jwtCookieString = jwtCookie != null ? jwtCookie.toString() : null;
-
-        if (jwtCookieString != null) {
-            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookieString)
-                    .body(new UserInfoResponse(userDetails.getId(),
-                            userDetails.getUsername(),
-                            userDetails.getEmail(),
-                            roles));
-        } else {
-            // Handle the situation when jwtCookie is null
-            // You can throw an exception, return an error response, or handle it in any way that suits your application's logic
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new MessageResponse("Error: JWT cookie is null."));
-        }
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                .body(new UserInfoResponse(userDetails.getId(),
+                        userDetails.getUsername(),
+                        userDetails.getEmail(),
+                        roles));
     }
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -95,6 +85,7 @@ public class AuthController {
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
+
         if (signUpRequest.getPassword() == null || signUpRequest.getPassword() == ""){
             return ResponseEntity
                     .badRequest()
@@ -115,6 +106,7 @@ public class AuthController {
                     .badRequest()
                     .body(new MessageResponse("Error: Username cannot be shorter than 8 symbols!"));
         }
+
 
         // Create new user's account
         User user = new User(signUpRequest.getUsername(),
